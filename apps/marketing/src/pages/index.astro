@@ -21,7 +21,7 @@ import { RELEASES_URL } from "../lib/releases";
   <a href="/download" class="other-platforms">Other platforms</a>
 
   <div class="screenshot-wrap">
-    <img src="/screenshot.jpeg" alt="Zog" class="screenshot" />
+    <img src="/screenshot.jpeg" alt="Zog Code Editor" class="screenshot" />
   </div>
 </Layout>
 
@@ -118,8 +118,8 @@ import { RELEASES_URL } from "../lib/releases";
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    background: #fafafa;
-    color: #09090b;
+    background: #168039;
+    color: #fafafa;
     padding: 0.75rem 2rem;
     border-radius: 999px;
     font-weight: 600;
@@ -127,12 +127,13 @@ import { RELEASES_URL } from "../lib/releases";
     margin-bottom: 1.25rem;
     opacity: 0;
     animation: fade-in 1s ease-out 0.15s forwards;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   }
 
   .hero-button:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.08);
+    background: #136c31;
+    box-shadow: 0 10px 28px rgba(22, 128, 57, 0.28);
   }
 
   .hero-button:active {
@@ -191,9 +192,10 @@ import { RELEASES_URL } from "../lib/releases";
     width: 100%;
     display: block;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    border: 1px solid rgba(10, 10, 10, 0.12);
+    box-shadow: 0 24px 60px rgba(20, 40, 20, 0.18);
+    mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
   }
 
   .screenshot-wrap::after {

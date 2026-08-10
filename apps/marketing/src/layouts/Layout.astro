@@ -74,11 +74,13 @@ const {
 
 <style is:global>
   :root {
-    --bg: #09090b;
-    --fg: #fafafa;
-    --fg-muted: #a1a1aa;
-    --fg-dim: #71717a;
-    --border: rgba(255, 255, 255, 0.08);
+    --bg: #cfe5cc;
+    --bg-soft: #e7f2e5;
+    --fg: #0a0a0a;
+    --fg-muted: #3f4a3d;
+    --fg-dim: #5c6b58;
+    --accent: #168039;
+    --border: rgba(10, 10, 10, 0.1);
   }
 
   * {
@@ -88,11 +90,13 @@ const {
   }
 
   html {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   body {
-    background: var(--bg);
+    background:
+      radial-gradient(1200px 700px at 50% -10%, var(--bg-soft), transparent 60%),
+      var(--bg);
     color: var(--fg);
     font-family: "DM Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -154,9 +158,10 @@ const {
   }
 
   .nav-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
   }
 
   .nav-github {

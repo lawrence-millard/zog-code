@@ -78,11 +78,11 @@ const approvedAttributions: readonly ApprovedAttribution[] = [
 const approvedVisualAssetDigests = new Map<string, string>([
   [
     "apps/marketing/public/screenshot.jpeg",
-    "0b4be139f13dd08885a1aac26fc1f7c623697db157777d16360e985c93d47bcf",
+    "ce8b0876762e76f913482963c5f12796b1858ccd0a9c852e738702af5f260932",
   ],
   [
     "assets/prod/readme-screenshot.jpeg",
-    "0b4be139f13dd08885a1aac26fc1f7c623697db157777d16360e985c93d47bcf",
+    "ce8b0876762e76f913482963c5f12796b1858ccd0a9c852e738702af5f260932",
   ],
 ]);
 

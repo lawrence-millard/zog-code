@@ -4,8 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import { RELEASES_URL } from "../lib/releases";
 ---
 
-<Layout title="Download — Zog" description="Download Zog for macOS, Windows, or Linux.">
-  <h1 class="heading">Download Zog</h1>
+<Layout title="Download — Zog Code Editor" description="Download Zog Code Editor for macOS, Windows, or Linux.">
+  <h1 class="heading">Download Zog Code Editor</h1>
   <p class="subheading">
     <span id="version-label">Loading latest release&hellip;</span>
     <a id="changelog-link" class="changelog-link" href="#" target="_blank" rel="noopener noreferrer" style="display:none">View changelog<span aria-hidden="true"> &#8599;</span></a>
@@ -208,13 +208,13 @@ import { RELEASES_URL } from "../lib/releases";
     padding: 0.85rem 1rem;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.45);
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
 
   .download-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(22, 128, 57, 0.35);
     transform: translateY(-1px);
   }
 
