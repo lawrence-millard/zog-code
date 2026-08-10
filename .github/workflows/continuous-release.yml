@@ -1,0 +1,152 @@
+name: Continuous Desktop Release
+
+# Build and publish desktop installers on every push to main so
+# code.zog.watch download links stay current. Artifacts are unsigned until
+# Apple/Windows signing secrets are configured on the repository.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zog-continuous-desktop-release
+  cancel-in-progress: true
+
+jobs:
+  version:
+    name: Version
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: meta
+        name: Resolve build version
+        shell: bash
+        run: |
+          base="$(node -p "require('./apps/desktop/package.json').version")"
+          # Valid semver prerelease id; keeps download suffixes like -arm64.dmg matching.
+          version="${base}-build.${GITHUB_RUN_NUMBER}"
+          tag="v${version}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "Publishing continuous release $tag"
+
+  build:
+    name: Build ${{ matrix.label }}
+    needs: version
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: macOS arm64
+            runner: macos-14
+            platform: mac
+            target: dmg
+            arch: arm64
+          - label: macOS x64
+            runner: macos-15-intel
+            platform: mac
+            target: dmg
+            arch: x64
+          - label: Linux x64
+            runner: ubuntu-24.04
+            platform: linux
+            target: AppImage
+            arch: x64
+          - label: Windows x64
+            runner: windows-2022
+            platform: win
+            target: nsis
+            arch: x64
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --ignore-scripts
+
+      - name: Build desktop artifact (unsigned)
+        shell: bash
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          # Force unsigned continuous builds even if signing secrets exist later
+          # for the tagged Release Desktop workflow.
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: |
+          bun run dist:desktop:artifact -- \
+            --platform "${{ matrix.platform }}" \
+            --target "${{ matrix.target }}" \
+            --arch "${{ matrix.arch }}" \
+            --build-version "${{ needs.version.outputs.version }}" \
+            --source-commit "${{ github.sha }}" \
+            --verbose
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: desktop-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+            release/*.exe
+            release/*.yml
+            release/*.blockmap
+          if-no-files-found: error
+
+  publish:
+    name: Publish GitHub Release
+    needs: [version, build]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: List release assets
+        run: find release-assets -type f | sort
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.version.outputs.tag }}
+          name: Zog Code Editor ${{ needs.version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          prerelease: false
+          generate_release_notes: true
+          body: |
+            Continuous desktop build from `main` (`${{ github.sha }}`).
+
+            Installers in this release are **unsigned** until Apple/Windows
+            signing secrets are configured. macOS may require right-click → Open
+            the first time; Windows SmartScreen may warn.
+
+            Download page: https://code.zog.watch/download/
+          files: |
+            release-assets/*.dmg
+            release-assets/*.zip
+            release-assets/*.AppImage
+            release-assets/*.exe
+            release-assets/*.yml
+            release-assets/*.blockmap

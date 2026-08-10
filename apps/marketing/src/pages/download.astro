@@ -91,6 +91,7 @@ import { RELEASES_URL } from "../lib/releases";
         const suffix = card.dataset.asset;
         if (!suffix) return;
 
+        // electron-builder emits Zog-<version>-arm64.dmg / -x64.exe / -x64.AppImage
         const match = (release.assets ?? []).find((a) => a.name.endsWith(`-${suffix}`));
         if (match) {
           card.href = match.browser_download_url;
@@ -100,7 +101,7 @@ import { RELEASES_URL } from "../lib/releases";
       });
     } catch {
       if (versionLabel) {
-        versionLabel.textContent = "Could not load release info.";
+        versionLabel.textContent = "No desktop release published yet — check back soon.";
       }
       cards.forEach((card) => {
         card.href = RELEASES_URL;
