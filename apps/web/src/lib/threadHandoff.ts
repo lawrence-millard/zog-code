@@ -13,8 +13,8 @@ import {
   type ServerProviderStatus,
   type ServerSettingsView,
   type ThreadHandoffImportedMessage,
-} from "@synara/contracts";
-import { getDefaultModel } from "@synara/shared/model";
+} from "@zog/contracts";
+import { getDefaultModel } from "@zog/shared/model";
 import { type Thread } from "../types";
 import { DEFAULT_PROVIDER_ORDER } from "../providerOrdering";
 import { stripEmbeddedAssistantSelections } from "./assistantSelections";

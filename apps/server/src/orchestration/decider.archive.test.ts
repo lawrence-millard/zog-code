@@ -5,7 +5,7 @@ import {
   ThreadId,
   type OrchestrationEvent,
   type OrchestrationReadModel,
-} from "@synara/contracts";
+} from "@zog/contracts";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 

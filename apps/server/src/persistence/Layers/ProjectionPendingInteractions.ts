@@ -1,4 +1,4 @@
-import { respondingInteractionReclaimCutoff } from "@synara/shared/pendingInteractions";
+import { respondingInteractionReclaimCutoff } from "@zog/shared/pendingInteractions";
 import * as SqlClient from "effect/unstable/sql/SqlClient";
 import * as SqlSchema from "effect/unstable/sql/SqlSchema";
 import { Effect, Layer } from "effect";

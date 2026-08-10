@@ -1,4 +1,4 @@
-import type { ThreadId } from "@synara/contracts";
+import type { ThreadId } from "@zog/contracts";
 import { useEffect, useEffectEvent } from "react";
 
 export function useBrowserPanelDesktopBridge(input: {

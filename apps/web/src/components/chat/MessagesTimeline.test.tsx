@@ -3,7 +3,7 @@
 // Layer: Web chat component tests
 // Depends on: renderToStaticMarkup and a mocked LegendList.
 
-import { CheckpointRef, MessageId, ThreadId, TurnId } from "@synara/contracts";
+import { CheckpointRef, MessageId, ThreadId, TurnId } from "@zog/contracts";
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { formatShortTimestamp } from "../../timestampFormat";
@@ -294,9 +294,9 @@ describe("MessagesTimeline", () => {
     );
 
     expect(markup.match(/data-cross-task-origin="true"/g)).toHaveLength(1);
-    expect(markup).toContain("Sent by Synara from another thread");
+    expect(markup).toContain("Sent by Zog from another thread");
     expect(markup).toContain('aria-label="Open source thread"');
-    expect(markup.indexOf("Sent by Synara from another thread")).toBeLessThan(
+    expect(markup.indexOf("Sent by Zog from another thread")).toBeLessThan(
       markup.indexOf("Inspect the repository"),
     );
   });
@@ -345,7 +345,7 @@ describe("MessagesTimeline", () => {
       />,
     );
 
-    expect(markup).toContain("Sent by Synara from another thread");
+    expect(markup).toContain("Sent by Zog from another thread");
     expect(markup).not.toContain("Sent by agent");
   });
 
@@ -2648,7 +2648,7 @@ describe("MessagesTimeline", () => {
     expect(markup).toContain('data-tool-icon="mcp"');
   });
 
-  it("shows the Synara mark for every provider-specific tool row shape", async () => {
+  it("shows the Zog mark for every provider-specific tool row shape", async () => {
     const { MessagesTimeline } = await import("./MessagesTimeline");
     const baseProps = makeTimelineBaseProps();
 
@@ -2658,28 +2658,28 @@ describe("MessagesTimeline", () => {
         {...baseProps}
         timelineEntries={[
           {
-            id: "entry-inline-synara-claude",
+            id: "entry-inline-zog-claude",
             kind: "work",
             createdAt: "2026-03-17T19:12:28.000Z",
             entry: {
-              id: "work-inline-synara-claude",
+              id: "work-inline-zog-claude",
               createdAt: "2026-03-17T19:12:28.000Z",
               label: "MCP tool call",
               tone: "tool",
               itemType: "dynamic_tool_call",
-              toolTitle: "Synara__synara_create_thread",
-              toolName: "Synara__synara_create_thread",
-              detail: "Synara__synara_create_thread",
+              toolTitle: "Zog__zog_create_thread",
+              toolName: "Zog__zog_create_thread",
+              detail: "Zog__zog_create_thread",
               activityKind: "tool.started",
             },
           },
         ]}
       />,
     );
-    expect(claudeMarkup).toContain('data-tool-icon="synara"');
+    expect(claudeMarkup).toContain('data-tool-icon="zog"');
     expect(claudeMarkup).not.toContain('data-tool-icon="mcp"');
-    expect(claudeMarkup).toContain("Synara is creating a thread");
-    expect(claudeMarkup).not.toContain("Synara__synara_create_thread");
+    expect(claudeMarkup).toContain("Zog is creating a thread");
+    expect(claudeMarkup).not.toContain("Zog__zog_create_thread");
 
     // A provider may misclassify an MCP action containing "create" or "list"
     // as a file change. Tool identity still wins over that transport category.
@@ -2688,41 +2688,41 @@ describe("MessagesTimeline", () => {
         {...baseProps}
         timelineEntries={[
           {
-            id: "entry-inline-synara-codex",
+            id: "entry-inline-zog-codex",
             kind: "work",
             createdAt: "2026-03-17T19:12:28.000Z",
             entry: {
-              id: "work-inline-synara-codex",
+              id: "work-inline-zog-codex",
               createdAt: "2026-03-17T19:12:28.000Z",
               label: "MCP tool call",
               tone: "tool",
               itemType: "file_change",
-              toolTitle: "mcp__Synara__synara_list_threads",
-              detail: "mcp__Synara__synara_list_threads",
+              toolTitle: "mcp__Zog__zog_list_threads",
+              detail: "mcp__Zog__zog_list_threads",
             },
           },
         ]}
       />,
     );
-    expect(codexMarkup).toContain('data-tool-icon="synara"');
-    expect(codexMarkup).toContain("Synara listed threads");
-    expect(codexMarkup).not.toContain("mcp__Synara__synara_list_threads");
+    expect(codexMarkup).toContain('data-tool-icon="zog"');
+    expect(codexMarkup).toContain("Zog listed threads");
+    expect(codexMarkup).not.toContain("mcp__Zog__zog_list_threads");
 
     const failedMarkup = renderToStaticMarkup(
       <MessagesTimeline
         {...baseProps}
         timelineEntries={[
           {
-            id: "entry-inline-synara-failed",
+            id: "entry-inline-zog-failed",
             kind: "work",
             createdAt: "2026-03-17T19:12:28.000Z",
             entry: {
-              id: "work-inline-synara-failed",
+              id: "work-inline-zog-failed",
               createdAt: "2026-03-17T19:12:28.000Z",
               label: "MCP tool call",
               tone: "tool",
               itemType: "mcp_tool_call",
-              toolName: "mcp__synara__synara_create_threads",
+              toolName: "mcp__zog__zog_create_threads",
               toolStatus: "failed",
               detail: "Claude rejected reasoningEffort",
               activityKind: "tool.completed",
@@ -2731,33 +2731,33 @@ describe("MessagesTimeline", () => {
         ]}
       />,
     );
-    expect(failedMarkup).toContain("Synara couldn&#x27;t create threads");
+    expect(failedMarkup).toContain("Zog couldn&#x27;t create threads");
     expect(failedMarkup).toContain("Claude rejected reasoningEffort");
   });
 
-  // Browser calls get the globe rather than the generic Synara mark: a browsing
+  // Browser calls get the globe rather than the generic Zog mark: a browsing
   // row is about a page, and the surface it acted on is the first thing to read.
-  it("uses the browser icon and action name for Synara browser calls", async () => {
+  it("uses the browser icon and action name for Zog browser calls", async () => {
     const { MessagesTimeline } = await import("./MessagesTimeline");
     const markup = renderToStaticMarkup(
       <MessagesTimeline
         {...makeTimelineBaseProps()}
         timelineEntries={[
           {
-            id: "entry-inline-synara-browser",
+            id: "entry-inline-zog-browser",
             kind: "work",
             createdAt: "2026-03-17T19:12:28.000Z",
             entry: {
-              id: "work-inline-synara-browser",
+              id: "work-inline-zog-browser",
               createdAt: "2026-03-17T19:12:28.000Z",
               label: "MCP tool call",
               tone: "tool",
               itemType: "mcp_tool_call",
-              toolName: "mcp__synara__browser_open",
+              toolName: "mcp__zog__browser_open",
               toolStatus: "completed",
               liveActivity: {
                 state: "completed",
-                label: "Synara: Browser Open",
+                label: "Zog: Browser Open",
                 startedAt: "2026-03-17T19:12:27.000Z",
                 lastActivityAt: "2026-03-17T19:12:28.000Z",
                 elapsedSeconds: 1,
@@ -2773,7 +2773,7 @@ describe("MessagesTimeline", () => {
     // A settled call reads as its action alone — no lifecycle or timing tail.
     expect(markup).not.toContain("elapsed");
     expect(markup).not.toContain("Completed tool");
-    expect(markup).not.toContain("Synara: Browser Open");
+    expect(markup).not.toContain("Zog: Browser Open");
 
     const presentationOnlyMarkup = renderToStaticMarkup(
       <MessagesTimeline
@@ -2820,31 +2820,31 @@ describe("MessagesTimeline", () => {
       );
 
     const readThreadMarkup = renderSingleToolRow({
-      id: "work-synara-read-thread-args",
+      id: "work-zog-read-thread-args",
       createdAt: "2026-03-17T19:12:28.000Z",
       label: "MCP tool call",
       tone: "tool",
       itemType: "mcp_tool_call",
-      toolName: "mcp__synara__synara_read_thread",
-      detail: 'mcp__synara__synara_read_thread: {"threadId":"c357d8c5-b4c1-47d0"}',
+      toolName: "mcp__zog__zog_read_thread",
+      detail: 'mcp__zog__zog_read_thread: {"threadId":"c357d8c5-b4c1-47d0"}',
       activityKind: "tool.completed",
     });
-    expect(readThreadMarkup).toContain("Synara read a thread");
-    expect(readThreadMarkup).not.toContain("mcp__synara__synara_read_thread:");
+    expect(readThreadMarkup).toContain("Zog read a thread");
+    expect(readThreadMarkup).not.toContain("mcp__zog__zog_read_thread:");
     expect(readThreadMarkup).not.toContain("threadId");
 
     const diagnoseMarkup = renderSingleToolRow({
-      id: "work-synara-diagnose-args",
+      id: "work-zog-diagnose-args",
       createdAt: "2026-03-17T19:12:28.000Z",
       label: "MCP tool call",
       tone: "tool",
       itemType: "mcp_tool_call",
-      toolName: "mcp__synara__synara_diagnose_thread",
-      detail: 'mcp__synara__synara_diagnose_thread: {"threadId":"09a1615d-084f-40b9"}',
+      toolName: "mcp__zog__zog_diagnose_thread",
+      detail: 'mcp__zog__zog_diagnose_thread: {"threadId":"09a1615d-084f-40b9"}',
       activityKind: "tool.completed",
     });
-    expect(diagnoseMarkup).toContain("Synara diagnosed a thread");
-    expect(diagnoseMarkup).not.toContain("mcp__synara__synara_diagnose_thread:");
+    expect(diagnoseMarkup).toContain("Zog diagnosed a thread");
+    expect(diagnoseMarkup).not.toContain("mcp__zog__zog_diagnose_thread:");
     expect(diagnoseMarkup).not.toContain("threadId");
 
     const dynamicToolMarkup = renderSingleToolRow({
@@ -2855,7 +2855,7 @@ describe("MessagesTimeline", () => {
       itemType: "dynamic_tool_call",
       toolName: "ToolSearch",
       toolTitle: "ToolSearch",
-      detail: 'ToolSearch: {"query":"select:mcp__synara__synara_read_thread_events"}',
+      detail: 'ToolSearch: {"query":"select:mcp__zog__zog_read_thread_events"}',
       activityKind: "tool.completed",
     });
     expect(dynamicToolMarkup).toContain("ToolSearch");
@@ -2864,50 +2864,50 @@ describe("MessagesTimeline", () => {
     // Failed calls are exempt: the JSON-shaped detail may be the only place
     // the error surfaces, so it stays visible inline.
     const failedArgsMarkup = renderSingleToolRow({
-      id: "work-synara-failed-args",
+      id: "work-zog-failed-args",
       createdAt: "2026-03-17T19:12:28.000Z",
       label: "MCP tool call",
       tone: "tool",
       itemType: "mcp_tool_call",
-      toolName: "mcp__synara__synara_create_threads",
+      toolName: "mcp__zog__zog_create_threads",
       toolStatus: "failed",
       detail: 'McpError: {"code":-32602,"message":"Invalid params"}',
       activityKind: "tool.completed",
     });
-    expect(failedArgsMarkup).toContain("Synara couldn&#x27;t create threads");
+    expect(failedArgsMarkup).toContain("Zog couldn&#x27;t create threads");
     expect(failedArgsMarkup).toContain("Invalid params");
   });
 
-  it("keeps Synara tool calls and adds a thread creation recap at the end of the turn", async () => {
+  it("keeps Zog tool calls and adds a thread creation recap at the end of the turn", async () => {
     const { MessagesTimeline } = await import("./MessagesTimeline");
-    const assistantMessageId = MessageId.makeUnsafe("message-synara-recap");
+    const assistantMessageId = MessageId.makeUnsafe("message-zog-recap");
     const workEntries = [
       {
-        id: "entry-synara-create-tool",
+        id: "entry-zog-create-tool",
         kind: "work",
         createdAt: "2026-03-17T19:12:28.000Z",
         entry: {
-          id: "work-synara-create-tool",
+          id: "work-zog-create-tool",
           createdAt: "2026-03-17T19:12:28.000Z",
           label: "MCP tool call",
           tone: "tool",
           itemType: "mcp_tool_call",
-          toolName: "mcp__synara__synara_create_threads",
-          toolTitle: "Synara created threads",
+          toolName: "mcp__zog__zog_create_threads",
+          toolTitle: "Zog created threads",
           activityKind: "tool.completed",
         },
       },
       {
-        id: "entry-synara-create-recap",
+        id: "entry-zog-create-recap",
         kind: "work",
         createdAt: "2026-03-17T19:12:29.000Z",
         entry: {
-          id: "work-synara-create-recap",
+          id: "work-zog-create-recap",
           createdAt: "2026-03-17T19:12:29.000Z",
-          label: "Created 2 Synara threads",
+          label: "Created 2 Zog threads",
           tone: "info",
-          activityKind: "synara.threads.created",
-          synaraThreadCreation: {
+          activityKind: "zog.threads.created",
+          zogThreadCreation: {
             operationId: "gateway:create:two-workers",
             requestedCount: 2,
             createdCount: 2,
@@ -2946,8 +2946,8 @@ describe("MessagesTimeline", () => {
         timelineEntries={[...workEntries]}
       />,
     );
-    expect(liveMarkup).toContain("Synara created threads");
-    expect(liveMarkup).not.toContain('data-synara-thread-creation-card="true"');
+    expect(liveMarkup).toContain("Zog created threads");
+    expect(liveMarkup).not.toContain('data-zog-thread-creation-card="true"');
 
     const markup = renderToStaticMarkup(
       <MessagesTimeline
@@ -2957,7 +2957,7 @@ describe("MessagesTimeline", () => {
         timelineEntries={[
           ...workEntries,
           {
-            id: "entry-synara-recap-assistant",
+            id: "entry-zog-recap-assistant",
             kind: "message",
             createdAt: "2026-03-17T19:12:30.000Z",
             message: {
@@ -2976,7 +2976,7 @@ describe("MessagesTimeline", () => {
     // The original MCP tool call is preserved inside the settled turn's
     // "Worked for..." disclosure; the recap is an additional final artifact.
     expect(markup).toContain("Worked for");
-    expect(markup).toContain('data-synara-thread-creation-card="true"');
+    expect(markup).toContain('data-zog-thread-creation-card="true"');
     expect(markup).toContain("2 threads created");
     expect(markup).toContain("2/2 requested threads created");
     expect(markup).toContain("Explain the repository with Terra");
@@ -2984,7 +2984,7 @@ describe("MessagesTimeline", () => {
     expect(markup).toContain("GPT-5.6 Terra");
     expect(markup).toContain("Claude Sonnet 5");
     expect(markup.indexOf("Both threads are running.")).toBeLessThan(
-      markup.indexOf('data-synara-thread-creation-card="true"'),
+      markup.indexOf('data-zog-thread-creation-card="true"'),
     );
   });
 
@@ -3196,7 +3196,7 @@ describe("MessagesTimeline", () => {
                 turnId: TurnId.makeUnsafe("turn-diff-1"),
                 checkpointTurnCount: 1,
                 checkpointTurnCounts: [1],
-                checkpointRef: CheckpointRef.makeUnsafe("refs/synara/checkpoints/thread/turn/1"),
+                checkpointRef: CheckpointRef.makeUnsafe("refs/zog/checkpoints/thread/turn/1"),
                 status: "ready",
                 completedAt: "2026-03-17T19:12:30.000Z",
                 assistantMessageId,

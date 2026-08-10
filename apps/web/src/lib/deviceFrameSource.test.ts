@@ -1,5 +1,5 @@
-import type { DeviceUdid } from "@synara/contracts";
-import { encodeDeviceFrame } from "@synara/shared/deviceFrame";
+import type { DeviceUdid } from "@zog/contracts";
+import { encodeDeviceFrame } from "@zog/shared/deviceFrame";
 import { describe, expect, it, vi } from "vitest";
 
 import {

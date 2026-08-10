@@ -1,17 +1,17 @@
-# Synara Canary
+# Zog Canary
 
-Synara Canary is a frozen local build of a chosen remote Git ref. It is intentionally separate
-from both Synara Stable and the HMR development process.
+Zog Canary is a frozen local build of a chosen remote Git ref. It is intentionally separate
+from both Zog Stable and the HMR development process.
 
 ## Isolation
 
-- App name: `Synara Canary`
-- Bundle ID: `com.emanueledipietro.synara.canary`
-- Desktop origin: `synara-canary://app`
-- Synara data: `~/.synara-canary`
-- Electron profile: `synara-canary`
-- Managed source: `~/.cache/synara-canary/source`
-- Runtime log: `~/.synara-canary/canary.log`
+- App name: `Zog Canary`
+- Bundle ID: `com.lawrence-millard.zog.canary`
+- Desktop origin: `zog-canary://app`
+- Zog data: `~/.zog-canary`
+- Electron profile: `zog-canary`
+- Managed source: `~/.cache/zog-canary/source`
+- Runtime log: `~/.zog-canary/canary.log`
 - Updates: only through the Canary scripts; the production updater is disabled
 
 Canary starts with an empty data directory. It never copies or shares Stable data.
@@ -32,7 +32,7 @@ affect the running Canary.
 While this change is still a stacked PR, it can be tested explicitly from its remote branch:
 
 ```bash
-bun run canary:setup -- --ref codex/synara-canary
+bun run canary:setup -- --ref codex/zog-canary
 ```
 
 Later `canary:update` calls keep using that tracked ref automatically. After this PR lands on `main`,
@@ -58,8 +58,8 @@ the previous commit before restarting Canary.
 Paths can be overridden without touching Stable:
 
 ```bash
-SYNARA_CANARY_HOME=/path/to/data \
-SYNARA_CANARY_SOURCE=/path/to/source \
+ZOG_CANARY_HOME=/path/to/data \
+ZOG_CANARY_SOURCE=/path/to/source \
 bun run canary:update
 ```
 
@@ -68,9 +68,9 @@ bun run canary:update
 Use a named dev instance and a separate home:
 
 ```bash
-env -u SYNARA_AUTH_TOKEN \
-  SYNARA_DEV_INSTANCE=my-feature \
-  bun run dev -- --home-dir ./.synara/dev-my-feature
+env -u ZOG_AUTH_TOKEN \
+  ZOG_DEV_INSTANCE=my-feature \
+  bun run dev -- --home-dir ./.zog/dev-my-feature
 ```
 
 Canary remains pinned to its compiled commit while the development instance continues to use HMR.

@@ -19,7 +19,7 @@
  *
  * @module device/deviceFrameTransport
  */
-import { encodeDeviceFrame } from "@synara/shared/deviceFrame";
+import { encodeDeviceFrame } from "@zog/shared/deviceFrame";
 
 import type { DeviceStreamFrame } from "./DeviceBackend.ts";
 

@@ -1,4 +1,4 @@
-import { ProjectId, ThreadId } from "@synara/contracts";
+import { ProjectId, ThreadId } from "@zog/contracts";
 import { describe, expect, it } from "vitest";
 
 import type { SplitView } from "../../splitViewStore";

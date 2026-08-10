@@ -1,4 +1,4 @@
-import type { PullRequestListEntry } from "@synara/contracts";
+import type { PullRequestListEntry } from "@zog/contracts";
 import { describe, expect, it } from "vitest";
 
 import {

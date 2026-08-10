@@ -13,7 +13,7 @@ import {
   type ServerLocalServerProcess,
   type ThreadBrowserState,
   type ThreadId,
-} from "@synara/contracts";
+} from "@zog/contracts";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -29,17 +29,17 @@ import {
   XIcon,
 } from "~/lib/icons";
 
-import { localServerPrimaryLabel } from "@synara/shared/localServers";
-import { resolveDesktopDipRectFromCssRect } from "@synara/shared/desktopChrome";
+import { localServerPrimaryLabel } from "@zog/shared/localServers";
+import { resolveDesktopDipRectFromCssRect } from "@zog/shared/desktopChrome";
 import {
   BROWSER_BLANK_URL,
   isBlankBrowserTabUrl,
   resolveCopyableBrowserTabUrl,
-} from "@synara/shared/browserSession";
+} from "@zog/shared/browserSession";
 import {
   BROWSER_COPY_LINK_TOAST_TITLE,
   isBrowserCopyLinkChord,
-} from "@synara/shared/browserShortcuts";
+} from "@zog/shared/browserShortcuts";
 
 import { isElectron } from "~/env";
 import { CentralIcon } from "~/lib/central-icons";
@@ -94,9 +94,9 @@ interface BrowserPanelProps {
 
 const BROWSER_BOUNDS_SYNC_BURST_FRAMES = 30;
 const BROWSER_BOUNDS_SYNC_STABLE_FRAME_TARGET = 2;
-const BROWSER_WEBVIEW_PARTITION = "persist:synara-browser";
+const BROWSER_WEBVIEW_PARTITION = "persist:zog-browser";
 const BROWSER_PERF_SAMPLE_INTERVAL_MS = 5_000;
-const SYNARA_BROWSER_LABEL = "Synara browser";
+const ZOG_BROWSER_LABEL = "Zog browser";
 const browserPanelHideScheduler = createBrowserPanelHideScheduler();
 // The address field and tab pills share one chrome-control surface so the whole row reads
 // as a single cohesive control: matching height, radius, border width, and type scale.
@@ -376,7 +376,7 @@ function isBrowserPerfLoggingEnabled(): boolean {
   }
 
   try {
-    return window.localStorage.getItem("synara:browser-perf") === "1";
+    return window.localStorage.getItem("zog:browser-perf") === "1";
   } catch {
     return false;
   }
@@ -1023,7 +1023,7 @@ export function BrowserPanel({
     }
 
     const intervalId = window.setInterval(() => {
-      console.info(`[${SYNARA_BROWSER_LABEL} panel perf]`, {
+      console.info(`[${ZOG_BROWSER_LABEL} panel perf]`, {
         threadId,
         ...perfCountersRef.current,
       });

@@ -1,6 +1,6 @@
 # Runtime modes
 
-Synara exposes three runtime modes in the permission picker:
+Zog exposes three runtime modes in the permission picker:
 
 - **Supervised**: asks the user before protected actions. Codex uses
   `approvalPolicy: untrusted`, `sandbox: read-only`, and

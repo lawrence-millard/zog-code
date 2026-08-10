@@ -1,4 +1,4 @@
-import { MessageId, TurnId, type OrchestrationThreadActivity } from "@synara/contracts";
+import { MessageId, TurnId, type OrchestrationThreadActivity } from "@zog/contracts";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -169,12 +169,12 @@ describe("deriveWorkLogEntries", () => {
         id: "automation-created",
         createdAt: "2026-02-23T00:00:05.000Z",
         kind: "automation.created",
-        summary: "Created automation: Watch Synara PR 231 - Every 5m",
+        summary: "Created automation: Watch Zog PR 231 - Every 5m",
         tone: "info",
         payload: {
           source: "chat-composer",
           automationId: "automation-7",
-          automationName: "Watch Synara PR 231",
+          automationName: "Watch Zog PR 231",
           cadenceLabel: "Every 5m",
         },
       }),
@@ -188,7 +188,7 @@ describe("deriveWorkLogEntries", () => {
     expect(automationEntry).toBeDefined();
     expect(automationEntry?.automation).toEqual({
       id: "automation-7",
-      name: "Watch Synara PR 231",
+      name: "Watch Zog PR 231",
       cadenceLabel: "Every 5m",
     });
   });
@@ -219,14 +219,14 @@ describe("deriveWorkLogEntries", () => {
     });
   });
 
-  it("exposes a provider-independent Synara thread creation recap", () => {
+  it("exposes a provider-independent Zog thread creation recap", () => {
     const activities: OrchestrationThreadActivity[] = [
       makeActivity({
-        id: "synara-created-threads",
+        id: "zog-created-threads",
         createdAt: "2026-02-23T00:00:05.000Z",
         turnId: "turn-1",
-        kind: "synara.threads.created",
-        summary: "Created 2 Synara threads",
+        kind: "zog.threads.created",
+        summary: "Created 2 Zog threads",
         tone: "info",
         payload: {
           operationId: "gateway:create:two-workers",
@@ -255,7 +255,7 @@ describe("deriveWorkLogEntries", () => {
     ];
 
     const [entry] = deriveWorkLogEntries(activities, TurnId.makeUnsafe("turn-1"));
-    expect(entry?.synaraThreadCreation).toEqual({
+    expect(entry?.zogThreadCreation).toEqual({
       operationId: "gateway:create:two-workers",
       requestedCount: 2,
       createdCount: 2,
@@ -413,7 +413,7 @@ describe("deriveWorkLogEntries", () => {
         id: "recovery-first",
         createdAt: "2026-02-23T00:00:01.000Z",
         kind: "provider.runtime.reconciled",
-        summary: "Synara recovered a stale running state",
+        summary: "Zog recovered a stale running state",
         turnId: "turn-stale",
         payload: recoveryPayload,
       }),
@@ -427,7 +427,7 @@ describe("deriveWorkLogEntries", () => {
         id: "recovery-repeat",
         createdAt: "2026-02-23T00:00:03.000Z",
         kind: "provider.runtime.reconciled",
-        summary: "Synara recovered a stale running state",
+        summary: "Zog recovered a stale running state",
         turnId: "turn-stale",
         payload: recoveryPayload,
       }),
@@ -1192,7 +1192,7 @@ describe("deriveWorkLogEntries", () => {
                   type: "read",
                   command: "sed -n '1,220p' README.md",
                   name: "README.md",
-                  path: "/Users/emanueledipietro/Developer/Testing/synara/README.md",
+                  path: "/Users/emanueledipietro/Developer/Testing/zog/README.md",
                 },
               ],
             },
@@ -1301,7 +1301,7 @@ describe("deriveWorkLogEntries", () => {
               type: "commandExecution",
               id: "call_6OII41pekq8cFCpOCF9pbeMu",
               command: "/bin/zsh -lc 'git status --short'",
-              cwd: "/Users/emanueledipietro/Developer/Testing/synara",
+              cwd: "/Users/emanueledipietro/Developer/Testing/zog",
               status: "completed",
               commandActions: [{ type: "unknown", command: "git status --short" }],
               aggregatedOutput: " M apps/desktop/src/main.ts\n...",
@@ -2206,21 +2206,21 @@ describe("deriveWorkLogEntries", () => {
   });
 
   it("preserves cancellation when an owning turn aborts", () => {
-    const turnId = TurnId.makeUnsafe("turn-with-cancelled-synara-tool");
+    const turnId = TurnId.makeUnsafe("turn-with-cancelled-zog-tool");
     const entries = deriveWorkLogEntries(
       [
         makeActivity({
-          id: "cancelled-synara-start",
+          id: "cancelled-zog-start",
           createdAt: "2026-02-23T00:00:01.000Z",
           kind: "tool.started",
-          summary: "Synara create thread",
+          summary: "Zog create thread",
           turnId,
           payload: {
             itemType: "mcp_tool_call",
-            title: "Synara create thread",
+            title: "Zog create thread",
             data: {
-              toolCallId: "cancelled-synara-call",
-              toolName: "mcp__synara__synara_create_thread",
+              toolCallId: "cancelled-zog-call",
+              toolName: "mcp__zog__zog_create_thread",
             },
           },
         }),
@@ -2248,14 +2248,14 @@ describe("deriveWorkLogEntries", () => {
           id: "interrupted-tool",
           createdAt: "2026-02-23T00:00:01.000Z",
           kind: "tool.completed",
-          summary: "Synara create thread",
+          summary: "Zog create thread",
           payload: {
             itemType: "mcp_tool_call",
-            title: "Synara create thread",
+            title: "Zog create thread",
             status: "interrupted",
             data: {
-              toolCallId: "interrupted-synara-call",
-              toolName: "mcp__synara__synara_create_thread",
+              toolCallId: "interrupted-zog-call",
+              toolName: "mcp__zog__zog_create_thread",
             },
           },
         }),
@@ -2515,42 +2515,42 @@ describe("deriveWorkLogEntries", () => {
     });
   });
 
-  it("presents Synara MCP activity consistently across provider item shapes", () => {
+  it("presents Zog MCP activity consistently across provider item shapes", () => {
     const activities: OrchestrationThreadActivity[] = [
       makeActivity({
-        id: "synara-mcp-create-thread-progress",
+        id: "zog-mcp-create-thread-progress",
         kind: "tool.updated",
         summary: "MCP tool call",
         payload: {
           itemType: "mcp_tool_call",
           title: "MCP tool call",
           data: {
-            toolCallId: "synara-mcp-create",
-            toolName: "mcp__synara__synara_create_thread",
+            toolCallId: "zog-mcp-create",
+            toolName: "mcp__zog__zog_create_thread",
           },
         },
       }),
       makeActivity({
-        id: "synara-dynamic-send-message-progress",
+        id: "zog-dynamic-send-message-progress",
         kind: "tool.updated",
         summary: "Tool call",
         payload: {
           itemType: "dynamic_tool_call",
-          title: "Synara__synara_send_message",
+          title: "Zog__zog_send_message",
           data: {
-            toolCallId: "synara-dynamic-send",
+            toolCallId: "zog-dynamic-send",
           },
         },
       }),
       makeActivity({
-        id: "synara-file-change-list-threads-progress",
+        id: "zog-file-change-list-threads-progress",
         kind: "tool.updated",
         summary: "File change",
         payload: {
           itemType: "file_change",
-          title: "mcp__Synara__synara_list_threads",
+          title: "mcp__Zog__zog_list_threads",
           data: {
-            toolCallId: "synara-file-change-list",
+            toolCallId: "zog-file-change-list",
           },
         },
       }),
@@ -2559,27 +2559,27 @@ describe("deriveWorkLogEntries", () => {
     const entries = deriveWorkLogEntries(activities, undefined);
     expect(entries.map((entry) => [entry.itemType, entry.toolTitle])).toEqual(
       expect.arrayContaining([
-        ["mcp_tool_call", "Synara is creating a thread"],
-        ["dynamic_tool_call", "Synara is sending a message"],
-        ["file_change", "Synara is listing threads"],
+        ["mcp_tool_call", "Zog is creating a thread"],
+        ["dynamic_tool_call", "Zog is sending a message"],
+        ["file_change", "Zog is listing threads"],
       ]),
     );
     expect(entries).toHaveLength(3);
   });
 
-  it("preserves a failed Synara MCP result as a failed activity sentence", () => {
+  it("preserves a failed Zog MCP result as a failed activity sentence", () => {
     const [entry] = deriveWorkLogEntries(
       [
         makeActivity({
-          id: "synara-create-threads-failed",
+          id: "zog-create-threads-failed",
           kind: "tool.completed",
-          summary: "synara__synara_create_threads",
+          summary: "zog__zog_create_threads",
           payload: {
             itemType: "mcp_tool_call",
             status: "failed",
             data: {
-              toolCallId: "synara-create-failed",
-              toolName: "mcp__synara__synara_create_threads",
+              toolCallId: "zog-create-failed",
+              toolName: "mcp__zog__zog_create_threads",
               rawOutput: {
                 is_error: 1,
                 output: { Error: "Invalid target options\n  at target.options" },
@@ -2593,7 +2593,7 @@ describe("deriveWorkLogEntries", () => {
 
     expect(entry).toMatchObject({
       toolStatus: "failed",
-      toolTitle: "Synara couldn't create threads",
+      toolTitle: "Zog couldn't create threads",
       detail: "Invalid target options",
     });
   });
@@ -3505,7 +3505,7 @@ describe("deriveWorkLogEntries Codex find regression", () => {
               id: "call_UmQKQmLCCrj9PF82rupLIFDO",
               command:
                 "/bin/zsh -lc \"find apps packages -maxdepth 2 -name package.json -print -exec sed -n '1,120p' {} \\\\;\"",
-              cwd: "/Users/emanueledipietro/Developer/Testing/synara",
+              cwd: "/Users/emanueledipietro/Developer/Testing/zog",
               processId: "38005",
               source: "unifiedExecStartup",
               status: "inProgress",
@@ -3543,7 +3543,7 @@ describe("deriveWorkLogEntries Codex find regression", () => {
               id: "call_UmQKQmLCCrj9PF82rupLIFDO",
               command:
                 "/bin/zsh -lc \"find apps packages -maxdepth 2 -name package.json -print -exec sed -n '1,120p' {} \\\\;\"",
-              cwd: "/Users/emanueledipietro/Developer/Testing/synara",
+              cwd: "/Users/emanueledipietro/Developer/Testing/zog",
               processId: "38005",
               source: "unifiedExecStartup",
               status: "completed",

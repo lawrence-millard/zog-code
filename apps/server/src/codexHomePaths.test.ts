@@ -6,7 +6,7 @@ import {
   resolveActiveCodexHomeWritePath,
   resolveBaseCodexHomePath,
   resolveCodexHomeAllowlistCandidates,
-  resolveSynaraCodexHomeOverlayPath,
+  resolveZogCodexHomeOverlayPath,
 } from "./codexHomePaths.ts";
 
 describe("Codex home paths", () => {
@@ -19,37 +19,37 @@ describe("Codex home paths", () => {
     assert.ok(resolveBaseCodexHomePath({}).endsWith(`${path.sep}.codex`));
   });
 
-  it("anchors the overlay under SYNARA_HOME", () => {
+  it("anchors the overlay under ZOG_HOME", () => {
     assert.equal(
-      resolveSynaraCodexHomeOverlayPath({ SYNARA_HOME: "/synara/runtime" }, "/users/me/.codex"),
-      path.join("/synara/runtime", "codex-home-overlay"),
+      resolveZogCodexHomeOverlayPath({ ZOG_HOME: "/zog/runtime" }, "/users/me/.codex"),
+      path.join("/zog/runtime", "codex-home-overlay"),
     );
   });
 
   it("derives a default overlay beside the source home", () => {
     assert.equal(
-      resolveSynaraCodexHomeOverlayPath({}, "/users/me/.codex"),
-      path.join("/users/me", ".synara", "runtime", "codex-home-overlay"),
+      resolveZogCodexHomeOverlayPath({}, "/users/me/.codex"),
+      path.join("/users/me", ".zog", "runtime", "codex-home-overlay"),
     );
   });
 
   it("uses the isolated overlay as Codex's write home", () => {
     assert.equal(
       resolveActiveCodexHomeWritePath({
-        env: { SYNARA_HOME: "/synara/runtime" },
+        env: { ZOG_HOME: "/zog/runtime" },
         homePath: "/users/me/.codex",
       }),
-      path.join("/synara/runtime", "codex-home-overlay"),
+      path.join("/zog/runtime", "codex-home-overlay"),
     );
   });
 
   it("allowlists source and overlay homes when distinct", () => {
     assert.deepEqual(
       resolveCodexHomeAllowlistCandidates({
-        env: { SYNARA_HOME: "/synara/runtime" },
+        env: { ZOG_HOME: "/zog/runtime" },
         homePath: "/users/me/.codex",
       }),
-      ["/users/me/.codex", path.join("/synara/runtime", "codex-home-overlay")],
+      ["/users/me/.codex", path.join("/zog/runtime", "codex-home-overlay")],
     );
   });
 });

@@ -1,21 +1,21 @@
 // FILE: desktopIdentity.ts
 // Purpose: Defines the canonical desktop application identity across packaging and runtime.
 
-export const SYNARA_DESKTOP_SCHEME = "synara";
-export const SYNARA_DESKTOP_ORIGIN = `${SYNARA_DESKTOP_SCHEME}://app`;
-export const SYNARA_DESKTOP_ENTRY_URL = `${SYNARA_DESKTOP_ORIGIN}/index.html`;
-export const SYNARA_DESKTOP_UPDATE_CHANNEL = "synara";
-export const SYNARA_PRODUCTION_BUNDLE_ID = "com.emanueledipietro.synara";
-export const SYNARA_DEVELOPMENT_BUNDLE_ID = `${SYNARA_PRODUCTION_BUNDLE_ID}.dev`;
-export const SYNARA_CANARY_BUNDLE_ID = `${SYNARA_PRODUCTION_BUNDLE_ID}.canary`;
-export const SYNARA_CANARY_DESKTOP_SCHEME = "synara-canary";
-export const SYNARA_CANARY_DESKTOP_ORIGIN = `${SYNARA_CANARY_DESKTOP_SCHEME}://app`;
-export const SYNARA_CANARY_DESKTOP_ENTRY_URL = `${SYNARA_CANARY_DESKTOP_ORIGIN}/index.html`;
+export const ZOG_DESKTOP_SCHEME = "zog";
+export const ZOG_DESKTOP_ORIGIN = `${ZOG_DESKTOP_SCHEME}://app`;
+export const ZOG_DESKTOP_ENTRY_URL = `${ZOG_DESKTOP_ORIGIN}/index.html`;
+export const ZOG_DESKTOP_UPDATE_CHANNEL = "zog";
+export const ZOG_PRODUCTION_BUNDLE_ID = "com.lawrence-millard.zog";
+export const ZOG_DEVELOPMENT_BUNDLE_ID = `${ZOG_PRODUCTION_BUNDLE_ID}.dev`;
+export const ZOG_CANARY_BUNDLE_ID = `${ZOG_PRODUCTION_BUNDLE_ID}.canary`;
+export const ZOG_CANARY_DESKTOP_SCHEME = "zog-canary";
+export const ZOG_CANARY_DESKTOP_ORIGIN = `${ZOG_CANARY_DESKTOP_SCHEME}://app`;
+export const ZOG_CANARY_DESKTOP_ENTRY_URL = `${ZOG_CANARY_DESKTOP_ORIGIN}/index.html`;
 
-export type SynaraDesktopFlavor = "production" | "development" | "canary";
+export type ZogDesktopFlavor = "production" | "development" | "canary";
 
-export interface SynaraDesktopIdentity {
-  readonly flavor: SynaraDesktopFlavor;
+export interface ZogDesktopIdentity {
+  readonly flavor: ZogDesktopFlavor;
   readonly displayName: string;
   readonly bundleId: string;
   readonly scheme: string;
@@ -26,56 +26,56 @@ export interface SynaraDesktopIdentity {
   readonly usesScriptedUpdates: boolean;
 }
 
-export function resolveSynaraDesktopFlavor(input: {
+export function resolveZogDesktopFlavor(input: {
   readonly isDevelopment: boolean;
   readonly requestedFlavor?: string | undefined;
-}): SynaraDesktopFlavor {
+}): ZogDesktopFlavor {
   if (input.requestedFlavor?.trim().toLowerCase() === "canary") {
     return "canary";
   }
   return input.isDevelopment ? "development" : "production";
 }
 
-export function synaraDesktopIdentity(flavor: SynaraDesktopFlavor): SynaraDesktopIdentity {
+export function zogDesktopIdentity(flavor: ZogDesktopFlavor): ZogDesktopIdentity {
   if (flavor === "canary") {
     return {
       flavor,
-      displayName: "Synara Canary",
-      bundleId: SYNARA_CANARY_BUNDLE_ID,
-      scheme: SYNARA_CANARY_DESKTOP_SCHEME,
-      origin: SYNARA_CANARY_DESKTOP_ORIGIN,
-      entryUrl: SYNARA_CANARY_DESKTOP_ENTRY_URL,
-      userDataDirectoryName: "synara-canary",
-      defaultHomeDirectoryName: ".synara-canary",
+      displayName: "Zog Code Editor Canary",
+      bundleId: ZOG_CANARY_BUNDLE_ID,
+      scheme: ZOG_CANARY_DESKTOP_SCHEME,
+      origin: ZOG_CANARY_DESKTOP_ORIGIN,
+      entryUrl: ZOG_CANARY_DESKTOP_ENTRY_URL,
+      userDataDirectoryName: "zog-canary",
+      defaultHomeDirectoryName: ".zog-canary",
       usesScriptedUpdates: true,
     };
   }
   if (flavor === "development") {
     return {
       flavor,
-      displayName: "Synara (Dev)",
-      bundleId: SYNARA_DEVELOPMENT_BUNDLE_ID,
-      scheme: SYNARA_DESKTOP_SCHEME,
-      origin: SYNARA_DESKTOP_ORIGIN,
-      entryUrl: SYNARA_DESKTOP_ENTRY_URL,
-      userDataDirectoryName: "synara-dev",
-      defaultHomeDirectoryName: ".synara",
+      displayName: "Zog Code Editor (Dev)",
+      bundleId: ZOG_DEVELOPMENT_BUNDLE_ID,
+      scheme: ZOG_DESKTOP_SCHEME,
+      origin: ZOG_DESKTOP_ORIGIN,
+      entryUrl: ZOG_DESKTOP_ENTRY_URL,
+      userDataDirectoryName: "zog-dev",
+      defaultHomeDirectoryName: ".zog",
       usesScriptedUpdates: false,
     };
   }
   return {
     flavor,
-    displayName: "Synara",
-    bundleId: SYNARA_PRODUCTION_BUNDLE_ID,
-    scheme: SYNARA_DESKTOP_SCHEME,
-    origin: SYNARA_DESKTOP_ORIGIN,
-    entryUrl: SYNARA_DESKTOP_ENTRY_URL,
-    userDataDirectoryName: "synara",
-    defaultHomeDirectoryName: ".synara",
+    displayName: "Zog Code Editor",
+    bundleId: ZOG_PRODUCTION_BUNDLE_ID,
+    scheme: ZOG_DESKTOP_SCHEME,
+    origin: ZOG_DESKTOP_ORIGIN,
+    entryUrl: ZOG_DESKTOP_ENTRY_URL,
+    userDataDirectoryName: "zog",
+    defaultHomeDirectoryName: ".zog",
     usesScriptedUpdates: false,
   };
 }
 
-export function synaraBundleId(isDevelopment: boolean): string {
-  return synaraDesktopIdentity(isDevelopment ? "development" : "production").bundleId;
+export function zogBundleId(isDevelopment: boolean): string {
+  return zogDesktopIdentity(isDevelopment ? "development" : "production").bundleId;
 }

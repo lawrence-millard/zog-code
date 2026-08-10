@@ -1,13 +1,13 @@
-# Verify: run Synara locally for runtime verification
+# Verify: run Zog locally for runtime verification
 
-How to launch an isolated Synara instance (server + web) to observe UI changes, without touching `~/.synara` or the default dev ports.
+How to launch an isolated Zog instance (server + web) to observe UI changes, without touching `~/.zog` or the default dev ports.
 
 ## Launch
 
 ```bash
 # 1. Server (from the directory you want as the workspace/project cwd):
-SYNARA_HOME=<scratch>/synara-home \
-SYNARA_PORT=3899 SYNARA_MODE=web SYNARA_NO_BROWSER=1 \
+ZOG_HOME=<scratch>/zog-home \
+ZOG_PORT=3899 ZOG_MODE=web ZOG_NO_BROWSER=1 \
 VITE_DEV_SERVER_URL=http://localhost:5899 \
 bun <repo>/apps/server/src/index.ts &
 

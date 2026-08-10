@@ -1,10 +1,10 @@
-import type { ServerConfig } from "@synara/contracts";
+import type { ServerConfig } from "@zog/contracts";
 
 export function createBrowserTestServerConfig(checkedAt: string): ServerConfig {
   return {
     cwd: "/repo/project",
     worktreesDir: "/repo/.codex/worktrees",
-    keybindingsConfigPath: "/repo/project/.synara-keybindings.json",
+    keybindingsConfigPath: "/repo/project/.zog-keybindings.json",
     keybindings: [],
     issues: [],
     providers: [

@@ -1,13 +1,13 @@
 // FILE: appSnapShortcut.ts
-// Purpose: Detect AppSnap shortcut overlap with Synara's renderer keybindings.
+// Purpose: Detect AppSnap shortcut overlap with Zog's renderer keybindings.
 
 import type {
   DesktopAppSnapKeyChord,
   KeybindingCommand,
   KeybindingShortcut,
   ResolvedKeybindingsConfig,
-} from "@synara/contracts";
-import { appSnapShortcutKeyLabel } from "@synara/shared/appSnapShortcut";
+} from "@zog/contracts";
+import { appSnapShortcutKeyLabel } from "@zog/shared/appSnapShortcut";
 
 import { DEFAULT_SHORTCUT_FALLBACKS } from "./keybindings";
 

@@ -13,7 +13,7 @@
       },
     },
     "apps/desktop": {
-      "name": "@synara/desktop",
+      "name": "@zog/desktop",
       "version": "0.7.1",
       "dependencies": {
         "effect": "catalog:",
@@ -21,9 +21,9 @@
         "electron-updater": "^6.6.2",
       },
       "devDependencies": {
-        "@synara/contracts": "workspace:*",
-        "@synara/shared": "workspace:*",
         "@types/node": "catalog:",
+        "@zog/contracts": "workspace:*",
+        "@zog/shared": "workspace:*",
         "tsdown": "catalog:",
         "typescript": "catalog:",
         "vitest": "catalog:",
@@ -31,7 +31,7 @@
       },
     },
     "apps/marketing": {
-      "name": "@synara/marketing",
+      "name": "@zog/marketing",
       "version": "0.0.0",
       "dependencies": {
         "astro": "^6.4.6",
@@ -42,11 +42,11 @@
       },
     },
     "apps/server": {
-      "name": "@synara/cli",
+      "name": "@zog/cli",
       "version": "0.7.1",
       "bin": {
-        "synara": "dist/index.mjs",
-        "synara-restore-migration-backup": "dist/restoreMigrationBackup.mjs",
+        "zog": "dist/index.mjs",
+        "zog-restore-migration-backup": "dist/restoreMigrationBackup.mjs",
       },
       "dependencies": {
         "@agentclientprotocol/sdk": "1.2.1",
@@ -69,12 +69,12 @@
       "devDependencies": {
         "@effect/language-service": "catalog:",
         "@effect/vitest": "catalog:",
-        "@synara/contracts": "workspace:*",
-        "@synara/shared": "workspace:*",
-        "@synara/web": "workspace:*",
         "@types/bun": "catalog:",
         "@types/node": "catalog:",
         "@types/ws": "^8.5.13",
+        "@zog/contracts": "workspace:*",
+        "@zog/shared": "workspace:*",
+        "@zog/web": "workspace:*",
         "tsdown": "catalog:",
         "typescript": "catalog:",
         "vitest": "catalog:",
@@ -82,7 +82,7 @@
       },
     },
     "apps/web": {
-      "name": "@synara/web",
+      "name": "@zog/web",
       "version": "0.7.1",
       "dependencies": {
         "@base-ui/react": "^1.5.0",
@@ -95,8 +95,6 @@
         "@legendapp/list": "3.3.3",
         "@lexical/react": "^0.41.0",
         "@pierre/diffs": "^1.2.12",
-        "@synara/contracts": "workspace:*",
-        "@synara/shared": "workspace:*",
         "@tabler/icons-react": "^3.44.0",
         "@tanstack/react-pacer": "^0.19.4",
         "@tanstack/react-query": "^5.90.0",
@@ -110,6 +108,8 @@
         "@xterm/addon-unicode11": "^0.9.0",
         "@xterm/addon-webgl": "^0.19.0",
         "@xterm/xterm": "^6.0.0",
+        "@zog/contracts": "workspace:*",
+        "@zog/shared": "workspace:*",
         "class-variance-authority": "^0.7.1",
         "effect": "catalog:",
         "html-to-image": "^1.11.13",
@@ -151,7 +151,7 @@
       },
     },
     "packages/contracts": {
-      "name": "@synara/contracts",
+      "name": "@zog/contracts",
       "version": "0.7.1",
       "dependencies": {
         "effect": "catalog:",
@@ -165,10 +165,10 @@
       },
     },
     "packages/shared": {
-      "name": "@synara/shared",
+      "name": "@zog/shared",
       "version": "0.0.0-alpha.1",
       "dependencies": {
-        "@synara/contracts": "workspace:*",
+        "@zog/contracts": "workspace:*",
         "effect": "catalog:",
       },
       "devDependencies": {
@@ -180,12 +180,12 @@
       },
     },
     "scripts": {
-      "name": "@synara/scripts",
+      "name": "@zog/scripts",
       "dependencies": {
         "@anthropic-ai/claude-agent-sdk": "^0.3.207",
         "@effect/platform-node": "catalog:",
-        "@synara/contracts": "workspace:*",
-        "@synara/shared": "workspace:*",
+        "@zog/contracts": "workspace:*",
+        "@zog/shared": "workspace:*",
         "effect": "catalog:",
       },
       "devDependencies": {
@@ -958,20 +958,6 @@
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
 
-    "@synara/cli": ["@synara/cli@workspace:apps/server"],
-
-    "@synara/contracts": ["@synara/contracts@workspace:packages/contracts"],
-
-    "@synara/desktop": ["@synara/desktop@workspace:apps/desktop"],
-
-    "@synara/marketing": ["@synara/marketing@workspace:apps/marketing"],
-
-    "@synara/scripts": ["@synara/scripts@workspace:scripts"],
-
-    "@synara/shared": ["@synara/shared@workspace:packages/shared"],
-
-    "@synara/web": ["@synara/web@workspace:apps/web"],
-
     "@szmarczak/http-timer": ["@szmarczak/http-timer@4.0.6", "", { "dependencies": { "defer-to-connect": "^2.0.0" } }, "sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w=="],
 
     "@tabler/icons": ["@tabler/icons@3.44.0", "", {}, "sha512-Wn0AOZG9sg0L+bjfMqq4eNhC6pQjIrk94LvvWYNYkY8KH8wC3YILRzQlrnVJc4FUeMxH/AK97QsYCX35H3LndA=="],
@@ -1173,6 +1159,20 @@
     "@xterm/headless": ["@xterm/headless@6.0.0", "", {}, "sha512-5Yj1QINYCyzrZtf8OFIHi47iQtI+0qYFPHmouEfG8dHNxbZ9Tb9YGSuLcsEwj9Z+OL75GJqPyJbyoFer80a2Hw=="],
 
     "@xterm/xterm": ["@xterm/xterm@6.0.0", "", {}, "sha512-TQwDdQGtwwDt+2cgKDLn0IRaSxYu1tSUjgKarSDkUM0ZNiSRXFpjxEsvc/Zgc5kq5omJ+V0a8/kIM2WD3sMOYg=="],
+
+    "@zog/cli": ["@zog/cli@workspace:apps/server"],
+
+    "@zog/contracts": ["@zog/contracts@workspace:packages/contracts"],
+
+    "@zog/desktop": ["@zog/desktop@workspace:apps/desktop"],
+
+    "@zog/marketing": ["@zog/marketing@workspace:apps/marketing"],
+
+    "@zog/scripts": ["@zog/scripts@workspace:scripts"],
+
+    "@zog/shared": ["@zog/shared@workspace:packages/shared"],
+
+    "@zog/web": ["@zog/web@workspace:apps/web"],
 
     "abbrev": ["abbrev@4.0.0", "", {}, "sha512-a1wflyaL0tHtJSmLSOVybYhy22vRih4eduhhrkcjgrWGnRfrZtovJ2FRjxuTtkkj47O/baf0R86QU5OuYpz8fA=="],
 

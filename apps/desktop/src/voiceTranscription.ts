@@ -9,18 +9,18 @@ import { app, ipcMain } from "electron";
 import type {
   ServerVoiceTranscriptionInput,
   ServerVoiceTranscriptionResult,
-} from "@synara/contracts";
-import { SERVER_VOICE_TRANSCRIPTION_MAX_AUDIO_BYTES } from "@synara/contracts";
+} from "@zog/contracts";
+import { SERVER_VOICE_TRANSCRIPTION_MAX_AUDIO_BYTES } from "@zog/contracts";
 import {
   CHATGPT_VOICE_TRANSCRIPTION_URL,
   requestChatGptVoiceTranscription,
-} from "@synara/shared/chatGptVoiceTranscription";
+} from "@zog/shared/chatGptVoiceTranscription";
 import {
   decodeOutboundJson,
   decodeOutboundText,
   type OutboundHttpResponse,
-} from "@synara/shared/outboundHttp";
-import { prepareWindowsSafeProcess } from "@synara/shared/windowsProcess";
+} from "@zog/shared/outboundHttp";
+import { prepareWindowsSafeProcess } from "@zog/shared/windowsProcess";
 import { SERVER_TRANSCRIBE_VOICE_CHANNEL } from "./ipcChannels";
 
 const MAX_VOICE_DURATION_MS = 120_000;
@@ -190,8 +190,8 @@ async function resolveDesktopVoiceAuth(
         method: "initialize",
         params: {
           clientInfo: {
-            name: "synara-desktop",
-            title: "Synara Desktop",
+            name: "zog-desktop",
+            title: "Zog Desktop",
             version: app.getVersion(),
           },
           capabilities: { experimentalApi: true },

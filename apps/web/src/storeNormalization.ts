@@ -12,10 +12,10 @@ import {
   type ProviderKind,
   ThreadId,
   type TurnId,
-} from "@synara/contracts";
-import { resolveThreadBranchRegressionGuard } from "@synara/shared/git";
-import { normalizeModelSlug } from "@synara/shared/model";
-import { deriveThreadSummaryMetadata } from "@synara/shared/threadSummary";
+} from "@zog/contracts";
+import { resolveThreadBranchRegressionGuard } from "@zog/shared/git";
+import { normalizeModelSlug } from "@zog/shared/model";
+import { deriveThreadSummaryMetadata } from "@zog/shared/threadSummary";
 
 import { isStalePendingRequestFailureDetail } from "./lib/pendingInteraction";
 import { toAttachmentPreviewUrl } from "./lib/wsHttpUrl";

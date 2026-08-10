@@ -1,5 +1,5 @@
 // FILE: importThreadRoute.ts
-// Purpose: Imports provider-native sessions and binds them to Synara thread projections.
+// Purpose: Imports provider-native sessions and binds them to Zog thread projections.
 // Layer: Orchestration command handler
 // Exports: makeImportThreadHandler.
 
@@ -9,11 +9,11 @@ import {
   type ProviderKind,
   type ThreadHandoffImportedMessage,
   type ThreadId,
-} from "@synara/contracts";
+} from "@zog/contracts";
 import {
   deriveAssociatedWorktreeMetadata,
   workspaceRootsEqual,
-} from "@synara/shared/threadWorkspace";
+} from "@zog/shared/threadWorkspace";
 import type { FileSystem, Path } from "effect";
 import { Data, Effect, Option } from "effect";
 
