@@ -832,7 +832,7 @@ const assertPackagedMacDeviceHelper = Effect.fn("assertPackagedMacDeviceHelper")
     // electron-builder also drops installers (.dmg/.zip) into this directory.
     // Only inspect nested directories so probing a .dmg path does not throw ENOTDIR.
     const entryPath = path.join(stageDistDir, entry);
-    const stat = yield* fs.stat(entryPath).pipe(Effect.catchAll(() => Effect.succeed(null)));
+    const stat = yield* fs.stat(entryPath).pipe(Effect.catch(() => Effect.succeed(null)));
     if (stat?.type !== "Directory") {
       continue;
     }
