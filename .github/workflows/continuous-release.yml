@@ -24,6 +24,7 @@ jobs:
     outputs:
       version: ${{ steps.meta.outputs.version }}
       tag: ${{ steps.meta.outputs.tag }}
+      lockfile_sha256: ${{ steps.meta.outputs.lockfile_sha256 }}
     steps:
       - uses: actions/checkout@v6
       - id: meta
@@ -34,8 +35,10 @@ jobs:
           # Valid semver prerelease id; keeps download suffixes like -arm64.dmg matching.
           version="${base}-build.${GITHUB_RUN_NUMBER}"
           tag="v${version}"
+          lockfile_sha256="$(sha256sum bun.lock | awk '{print $1}')"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "lockfile_sha256=$lockfile_sha256" >> "$GITHUB_OUTPUT"
           echo "Publishing continuous release $tag"
 
   build:
@@ -95,6 +98,7 @@ jobs:
             --arch "${{ matrix.arch }}" \
             --build-version "${{ needs.version.outputs.version }}" \
             --source-commit "${{ github.sha }}" \
+            --lockfile-sha256 "${{ needs.version.outputs.lockfile_sha256 }}" \
             --verbose
 
       - name: Upload artifacts
