@@ -60,8 +60,13 @@ import { RELEASES_URL } from "../lib/releases";
     }
     if (platform.os === "linux") {
       return (
+        assets.find((a) => a.name.endsWith("-x64.AppImage"))
+          ?.browser_download_url ??
+        assets.find((a) => a.name.endsWith("-x86_64.AppImage"))
+          ?.browser_download_url ??
         assets.find((a) => a.name.endsWith(".AppImage"))
-          ?.browser_download_url ?? null
+          ?.browser_download_url ??
+        null
       );
     }
     return null;

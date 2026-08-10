@@ -829,9 +829,15 @@ const assertPackagedMacDeviceHelper = Effect.fn("assertPackagedMacDeviceHelper")
   const fs = yield* FileSystem.FileSystem;
   const entries = yield* fs.readDirectory(stageDistDir);
   for (const entry of entries) {
+    // electron-builder also drops installers (.dmg/.zip) into this directory.
+    // Only inspect nested directories so probing a .dmg path does not throw ENOTDIR.
+    const entryPath = path.join(stageDistDir, entry);
+    const stat = yield* fs.stat(entryPath).pipe(Effect.catchAll(() => Effect.succeed(null)));
+    if (stat?.type !== "Directory") {
+      continue;
+    }
     const helperRoot = path.join(
-      stageDistDir,
-      entry,
+      entryPath,
       `${productName}.app`,
       "Contents",
       MAC_DEVICE_HELPER_RESOURCE_PATH,
