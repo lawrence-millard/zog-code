@@ -140,6 +140,8 @@ jobs:
           fi
 
       - name: Publish release
+        id: publish_release
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version.outputs.tag }}
@@ -164,3 +166,26 @@ jobs:
             release-assets/*.exe
             release-assets/*.yml
             release-assets/*.blockmap
+
+      - name: Ensure release is published
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.version.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG was not created." >&2
+            exit 1
+          fi
+          draft="$(gh release view "$TAG" --json isDraft --jq .isDraft)"
+          if [[ "$draft" == "true" ]]; then
+            echo "Publishing draft release $TAG after upload flake..."
+            gh release edit "$TAG" --draft=false --latest
+          fi
+          assets="$(gh release view "$TAG" --json assets --jq '[.assets[].name] | join("\n")')"
+          echo "$assets"
+          if ! grep -Eq '\.(dmg|exe|AppImage)$' <<<"$assets"; then
+            echo "Published release has no installers." >&2
+            exit 1
+          fi
