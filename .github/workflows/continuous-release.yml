@@ -31,9 +31,9 @@ jobs:
         name: Resolve build version
         shell: bash
         run: |
-          base="$(node -p "require('./apps/desktop/package.json').version")"
-          # Valid semver prerelease id; keeps download suffixes like -arm64.dmg matching.
-          version="${base}-build.${GITHUB_RUN_NUMBER}"
+          # Keep filenames simple (Zog-<version>-arm64.dmg). Hyphenated prerelease
+          # versions confused the macOS packaging path checks.
+          version="0.7.${GITHUB_RUN_NUMBER}"
           tag="v${version}"
           lockfile_sha256="$(sha256sum bun.lock | awk '{print $1}')"
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -117,6 +117,7 @@ jobs:
   publish:
     name: Publish GitHub Release
     needs: [version, build]
+    if: ${{ always() && needs.version.result == 'success' && needs.build.result != 'cancelled' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -127,8 +128,16 @@ jobs:
           path: release-assets
           merge-multiple: true
 
-      - name: List release assets
-        run: find release-assets -type f | sort
+      - name: Require at least one installer
+        shell: bash
+        run: |
+          count="$(find release-assets -type f \( -name '*.dmg' -o -name '*.exe' -o -name '*.AppImage' \) | wc -l | tr -d ' ')"
+          echo "Found $count installer asset(s)"
+          find release-assets -type f | sort
+          if [[ "$count" -lt 1 ]]; then
+            echo "No desktop installers were produced." >&2
+            exit 1
+          fi
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
@@ -139,6 +148,7 @@ jobs:
           make_latest: true
           prerelease: false
           generate_release_notes: true
+          fail_on_unmatched_files: false
           body: |
             Continuous desktop build from `main` (`${{ github.sha }}`).
 
